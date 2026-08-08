@@ -1,0 +1,42 @@
+/*
+! Tailwind CSS v3 - Custom Base Styles
+*/
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --font-mono: "Fira Code", "Courier New", monospace;
+    --radius: 0.5rem;
+  }
+
+  [data-theme="dark"] {
+    --color-bg: #0f172a;
+    --color-card: #1e293b;
+    --color-text: #f1f5f9;
+    --color-border: #334159;
+  }
+
+  [data-theme="light"] {
+    --color-bg: #ffffff;
+    --color-card: #f8fafc;
+    --color-text: #0f172a;
+    --color-border: #e2e8f0;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  * ::before,
+  * ::after {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-sans);
+  }
+}
