@@ -23,13 +23,16 @@ export default function LoginForm() {
 
   const onSubmit = async (data) => {
     setIsLoading(true);
+
     try {
-      const response = await import("../../../features/auth/api/authApi").then(
-        (mod) => mod.login(data)
-      );
+      const response = await import(
+        "../../../features/auth/api/authApi"
+      ).then((mod) => mod.login(data));
 
       const { token, refreshToken, user } = response;
+
       localStorage.setItem("job_platform_token", token);
+
       if (refreshToken) {
         localStorage.setItem(
           "job_platform_refresh_token",
@@ -44,7 +47,12 @@ export default function LoginForm() {
       });
 
       const rolePath = user?.role?.toLowerCase();
-      navigate(rolePath === "applicant" ? ROUTES.SEEKER.DASHBOARD : `/${rolePath}/dashboard`);
+
+      navigate(
+        rolePath === "applicant"
+          ? ROUTES.SEEKER.DASHBOARD
+          : `/${rolePath}/dashboard`
+      );
     } catch (error) {
       addToast({
         variant: "error",
@@ -59,16 +67,23 @@ export default function LoginForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      noValidate
+      className="space-y-4"
+    >
       <Input
         label="Email Address"
+        name="email"
         type="email"
         placeholder="you@example.com"
         error={errors.email?.message}
         {...register("email")}
       />
+
       <Input
         label="Password"
+        name="password"
         type="password"
         placeholder="••••••••"
         error={errors.password?.message}
@@ -77,9 +92,13 @@ export default function LoginForm() {
 
       <div className="flex items-center justify-between">
         <label className="flex items-center gap-2 text-sm">
-          <input type="checkbox" className="rounded" />
+          <input
+            type="checkbox"
+            className="rounded"
+          />
           Remember me
         </label>
+
         <Link
           to={ROUTES.HOME}
           className="text-sm text-primary-600 hover:text-primary-700"
